@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "scripts": {
+    "dist": "tsc",
+    "test": "node test.js",
+    "start": "node dist/index.js",
+    "dev": "nodemon --legacy-watch src/index.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0"
+  }
+}
