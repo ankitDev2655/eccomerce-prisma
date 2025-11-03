@@ -1,21 +1,33 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
   "scripts": {
-    "dist": "tsc",
-    "test": "node test.js",
+    "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --legacy-watch src/index.ts"
+    "dev": "npx nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.10.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@prisma/client": "^6.18.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "dotenv": "^16.4.5"
-  },
-  "devDependencies": {
-    "typescript": "^5.6.3",
-    "ts-node": "^10.9.2",
-    "nodemon": "^3.1.0",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.11.0"
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "prisma": "^6.18.0"
   }
 }
