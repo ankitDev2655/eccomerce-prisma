@@ -15,6 +15,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         next(new UnauthorizedException(ErrorMessage.UNAUTHORIZED, ErrorCode.UNAUTHORIZED));
         return;
     }
+    
 
     try {
         //3 If the token is present, verify that token and extract the payload
