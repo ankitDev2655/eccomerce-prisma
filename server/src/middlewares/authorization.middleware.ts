@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/secret";
 import { prismaClient } from "../config/prisma";
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     //1. Extract the token from header 
 
     const token = req.headers.authorization?.split(" ")[1];
@@ -42,5 +42,16 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
 
     //5. to attach the user to the current request object
+}
+
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+    if(user.role !== 'ADMIN'){
+        next(new UnauthorizedException(ErrorMessage.ADMIN_ONLY_ACCESS, ErrorCode.ADMIN_ONLY_ACCESS));
+        return;
+    }
+
+    next();
 }
 

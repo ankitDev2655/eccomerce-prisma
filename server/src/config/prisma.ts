@@ -1,9 +1,10 @@
 import { PrismaClient } from "../generated/prisma";
-import { signUpSchema } from "../schema/user";
 
 export const prismaClient = new PrismaClient({
-  log: ["query", "info", "warn", "error"],
+  log: ["query", "info", "warn", "error"]
 })
+
+
 // .$extends({
 //   query:{
 //     user: {
