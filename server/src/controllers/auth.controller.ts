@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { BCRYPT_SALT_ROUNDS, JWT_EXPIRES_IN, JWT_SECRET } from "../config/secret";
 import { BadRequestException } from "../exceptions/bad-requests.exceptions";
 import { ErrorCode, ErrorMessage } from "../exceptions/root.exceptions";
-import { signUpSchema } from "../schema/user";
+import { signUpSchema } from "../schema/user.schema";
 import { NotFoundException } from "../exceptions/not-found.exception";
 
 const authController = {

@@ -32,6 +32,7 @@ export enum ErrorMessage {
     USER_NOT_FOUND = 'USER_NOT_FOUND',
     INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
     USER_ALREADY_EXISTS = 'USER_ALREADY_EXISTS',
+    ADDRESS_NOT_FOUND = 'ADDRESS_NOT_FOUND',
 
     // ------------------- Validation & Server Errors -----------------------
     VALIDATION_ERROR = 'VALIDATION_ERROR',
@@ -57,6 +58,7 @@ export enum ErrorCode {
     USER_NOT_FOUND = 1001,
     INVALID_CREDENTIALS = 1002,
     USER_ALREADY_EXISTS = 1003,
+    ADDRESS_NOT_FOUND = 1007,
 
     // ------------------- Validation & General Errors (1004–1099) ----------
     VALIDATION_ERROR = 1004,
