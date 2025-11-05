@@ -5,11 +5,13 @@ import { NotFoundException } from "../exceptions/not-found.exception";
 import { ErrorCode, ErrorMessage } from "../exceptions/root.exceptions";
 import { BadRequestException } from "../exceptions/bad-requests.exceptions";
 
-export const getProducts = (req: Request, res: Response, next: NextFunction) => {
+export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+    const products = await prismaClient.products.findMany();
+
     res.status(200).json({
         success: true,
         message: "List of products",
-        products: [] // This would normally be fetched from the database
+        products: products
     });
 }
 

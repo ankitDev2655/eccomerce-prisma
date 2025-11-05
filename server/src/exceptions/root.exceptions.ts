@@ -46,6 +46,10 @@ export enum ErrorMessage {
     // ------------------- Product / E-commerce Errors ----------------------
     PRODUCT_NOT_FOUND = 'PRODUCT_NOT_FOUND',
     PRODUCT_ALREADY_EXISTS = 'PRODUCT_ALREADY_EXISTS',
+
+
+    // ------------------- Cart Errors ----------------------
+    CART_ITEM_NOT_FOUND = 'CART_ITEM_NOT_FOUND',
 }
 
 
@@ -73,4 +77,7 @@ export enum ErrorCode {
     // ------------------- Product / E-commerce Errors (2000–2999) ----------
     PRODUCT_NOT_FOUND = 2001,
     PRODUCT_ALREADY_EXISTS = 2002,
+
+    //------------------- Cart Errors (3000–3999) ----------------------
+    CART_ITEM_NOT_FOUND = 3001,
 }
