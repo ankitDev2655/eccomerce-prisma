@@ -16,7 +16,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 }
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-    await productSchema.parse(req.body);
+    productSchema.parse(req.body);
 
     const productExists = await prismaClient.products.findFirst({ where: { name: req.body.name } });
     if (productExists) {
@@ -71,7 +71,7 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
 
 export const updateProductById = async (req: Request, res: Response, next: NextFunction) => {
     // Validate input
-    await updateProductSchema.parse(req.body);
+    updateProductSchema.parse(req.body);
 
     if (!req.params.id) {
         throw new BadRequestException(

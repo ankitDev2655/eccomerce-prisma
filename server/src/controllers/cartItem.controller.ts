@@ -78,8 +78,6 @@ export const changeItemQuantity = async (req: Request, res: Response, next: Next
     const validateData = changeItemQuantitySchema.parse(req.body);
     const { quantity } = validateData;
 
-    console.log(quantity);
-
     if (!quantity || quantity <= 0) {
         throw new BadRequestException(
             "Invalid quantity",
@@ -94,6 +92,7 @@ export const changeItemQuantity = async (req: Request, res: Response, next: Next
         }
     });
 
+    console.log(cartItem)
     if (!cartItem) {
         throw new NotFoundException(
             ErrorMessage.CART_ITEM_NOT_FOUND,

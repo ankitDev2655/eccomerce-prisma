@@ -22,4 +22,5 @@ export const UpdateUserProfileSchema = z.object({
   email: z.string().email("Invalid email").optional(),
   defaultShippingAddressId: z.number().optional(),
   defaultBillingAddressId: z.number().optional(),
+  role: z.string().optional()
 });

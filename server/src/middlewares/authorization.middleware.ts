@@ -47,6 +47,7 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
+    console.log(user.role)
     if(user.role !== 'ADMIN'){
         next(new UnauthorizedException(ErrorMessage.ADMIN_ONLY_ACCESS, ErrorCode.ADMIN_ONLY_ACCESS));
         return;

@@ -50,6 +50,12 @@ export enum ErrorMessage {
 
     // ------------------- Cart Errors ----------------------
     CART_ITEM_NOT_FOUND = 'CART_ITEM_NOT_FOUND',
+
+
+    // ------------------- Order------------------------
+    ORDER_NOT_FOUND = 'ORDER_NOT_FOUND',
+    ORDER_ALREADY_EXISTS = 'ORDER_ALREADY_EXISTS',
+
 }
 
 
@@ -80,4 +86,8 @@ export enum ErrorCode {
 
     //------------------- Cart Errors (3000–3999) ----------------------
     CART_ITEM_NOT_FOUND = 3001,
+
+    // ------------------- Order Errors (4000-4999) ------------------------
+    ORDER_NOT_FOUND = 4001,
+    ORDER_ALREADY_EXISTS = 2002,
 }
