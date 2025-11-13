@@ -4,6 +4,7 @@ import { ErrorCode, ErrorMessage } from "../exceptions/root.exceptions";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/secret";
 import { prismaClient } from "../config/prisma";
+import { User } from "@prisma/client";
 
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     //1. Extract the token from header 
@@ -15,7 +16,7 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
         next(new UnauthorizedException(ErrorMessage.UNAUTHORIZED, ErrorCode.UNAUTHORIZED));
         return;
     }
-    
+
 
     try {
         //3 If the token is present, verify that token and extract the payload
@@ -45,14 +46,39 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
 }
 
 
+// export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+//     const user: User = req.user;
+//     console.log(user.role)
+//     if (user.role !== 'ADMIN') {
+//         next(new UnauthorizedException(ErrorMessage.ADMIN_ONLY_ACCESS, ErrorCode.ADMIN_ONLY_ACCESS));
+//         return;
+//     }
+
+//     next();
+// }
+
+
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
-    console.log(user.role)
-    if(user.role !== 'ADMIN'){
-        next(new UnauthorizedException(ErrorMessage.ADMIN_ONLY_ACCESS, ErrorCode.ADMIN_ONLY_ACCESS));
-        return;
+
+    if (!user) {
+        return next(
+            new UnauthorizedException(
+                ErrorMessage.UNAUTHORIZED,
+                ErrorCode.UNAUTHORIZED
+            )
+        );
+    }
+
+    if (user.role !== "ADMIN") {
+        return next(
+            new UnauthorizedException(
+                ErrorMessage.ADMIN_ONLY_ACCESS,
+                ErrorCode.ADMIN_ONLY_ACCESS
+            )
+        );
     }
 
     next();
-}
+};
 

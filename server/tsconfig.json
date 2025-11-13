@@ -24,7 +24,7 @@
     "declaration": true,       // Generate .d.ts declaration files
     "declarationMap": true,    // Generate source maps for declaration files
 
-    "typeRoots": ["./src/types", "./node_modules/@types"]  // Directories to find type definitions
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
 
   /* === Include / Exclude === */

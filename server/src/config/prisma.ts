@@ -1,27 +1,28 @@
-import { PrismaClient } from "../generated/prisma";
+// import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "@prisma/client";
 
 export const prismaClient = new PrismaClient({
-  log: [ "info", "warn", "error"]
+  log: ["info", "warn", "error"]
 })
-.$extends({
-  result:{
-    address:{
-      formattedAddress:{
-        needs:{
-          lineOne: true,
-          lineTwo: true,
-          city: true,
-          state: true,
-          country: true,
-          zipCode: true
-        },
-        compute: (address)=>{
-          return `${address.lineOne}, ${address.lineTwo}, ${address.city}, ${address.state}, ${address.country} - ${address.zipCode}`
+  .$extends({
+    result: {
+      address: {
+        formattedAddress: {
+          needs: {
+            lineOne: true,
+            lineTwo: true,
+            city: true,
+            state: true,
+            country: true,
+            zipCode: true
+          },
+          compute: (address: any) => {
+            return `${address.lineOne}, ${address.lineTwo}, ${address.city}, ${address.state}, ${address.country} - ${address.zipCode}`
+          }
         }
       }
     }
-  }
-})
+  })
 
 
 // .$extends({

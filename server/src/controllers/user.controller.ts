@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import { AddressSchema, UpdateUserProfileSchema, UpdateUserRole } from '../schema/user.schema';
 import { NotFoundException } from '../exceptions/not-found.exception';
 import { ErrorCode, ErrorMessage } from '../exceptions/root.exceptions';
-import { Address, User } from '../generated/prisma';
+// import { Address, User } from '../generated/prisma';
+import { User, Address } from "@prisma/client";
+
 import { prismaClient } from '../config/prisma';
 import { count } from 'console';
 import { BadRequestException } from '../exceptions/bad-requests.exceptions';
@@ -165,14 +167,14 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
-export const changeUserRole = async (req: Request, res: Response, next: NextFunction) => { 
+export const changeUserRole = async (req: Request, res: Response, next: NextFunction) => {
     UpdateUserRole.parse(req.body);
     try {
         const user = await prismaClient.user.update({
             where: {
                 id: Number(req.params.id)
             },
-            data:{
+            data: {
                 role: req.body.role
             },
             include: {

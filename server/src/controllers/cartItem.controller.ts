@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AddCartItemSchema, changeItemQuantitySchema } from "../schema/cart.schema";
 import { NotFoundException } from "../exceptions/not-found.exception";
 import { ErrorCode, ErrorMessage } from "../exceptions/root.exceptions";
-import { Products } from "../generated/prisma";
+import { Products } from "@prisma/client";
 import { prismaClient } from "../config/prisma";
 import { BadRequestException } from "../exceptions/bad-requests.exceptions";
 

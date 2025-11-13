@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "dev": "npx nodemon"
   },
   "keywords": [],
@@ -18,17 +18,17 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.10.0",
     "nodemon": "^3.1.10",
+    "prisma": "^6.19.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.18.0",
+    "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
-    "prisma": "^6.18.0",
     "zod": "^4.1.12"
   }
 }
