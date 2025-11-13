@@ -184,3 +184,30 @@ export const listProducts = async (req: Request, res: Response, next: NextFuncti
     });
 };
 
+
+
+export const searchProducts = async (req: Request, res: Response, next: NextFunction) => {
+    const q = req.query.q?.toString() || "";
+    // const products = await prismaClient.products.findMany({
+    //     where: {
+    //         search: {
+    //             fields: ["name", "description", "tags"], // 🧩 searchable columns
+    //             search: q,                               // 🔍 user input
+    //         },
+    //     }
+    // });
+
+    const products = await prismaClient.$queryRaw`
+  SELECT *
+  FROM "products"
+  WHERE to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(tags, ''))
+        @@ plainto_tsquery('english', ${q})
+  LIMIT 20;
+`;
+
+    res.json({
+        success: true,
+        message: "Products Fetched Successfully",
+        products
+    })
+}

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { prismaClient } from "../config/prisma";
-import { any } from "zod";
 import { NotFoundException } from "../exceptions/not-found.exception";
 import { ErrorCode, ErrorMessage } from "../exceptions/root.exceptions";
 import { BadRequestException } from "../exceptions/bad-requests.exceptions";
@@ -93,10 +92,9 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
 
 
 export const listOrders = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.user)
     const orders = await prismaClient.order.findMany({
         where: {
-            id: (req.user as any).id
+            userId: (req.user as any).id,
         }
     });
 
@@ -128,9 +126,6 @@ export const getOrderById = async (req: Request, res: Response, next: NextFuncti
     } catch (error) {
         throw new NotFoundException(ErrorMessage.ORDER_NOT_FOUND, ErrorCode.ORDER_NOT_FOUND);
     }
-
-
-
 }
 
 
@@ -176,4 +171,148 @@ export const cancelOrder = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
+
+export const listAllOrders = async (req: Request, res: Response, next: NextFunction) => {
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+
+    if (page <= 0 || limit <= 0) {
+        throw new BadRequestException(
+            "Page and Limit should be positive number",
+            ErrorCode.VALIDATION_ERROR
+        )
+    }
+
+    let whereClause = {};
+    const status = req.query.status;
+    if (status) {
+        whereClause = {
+            status
+        }
+    };
+
+    const totalOrder = await prismaClient.order.count();
+
+    const orders = await prismaClient.order.findMany({
+        where: whereClause,
+        skip: (page - 1) * limit,
+        take: limit,
+        include: {
+            OrderProducts: true,
+            OrderEvents: true
+        }
+    });
+
+    res.status(200).json({
+        success: true,
+        message: "Order fetched successfully",
+        data: {
+            total: totalOrder,
+            page,
+            limit,
+            orders,
+        },
+    })
+}
+
+
+export const changeStatus = async (req: Request, res: Response, next: NextFunction) => {
+    const orderId = Number(req.params.id);
+    const { status } = req.body
+
+    if (isNaN(orderId)) {
+        return next(new BadRequestException("Invalid order ID", ErrorCode.VALIDATION_ERROR));
+    }
+    try {
+
+        const result = await prismaClient.$transaction(async (tx) => {
+
+            const order = await tx.order.update({
+                where: {
+                    id: orderId
+                },
+                data: {
+                    status: status
+                }
+            })
+
+            const orderEvent = await tx.orderEvents.create({
+                data: {
+                    status: status,
+                    orderId: orderId
+                }
+            })
+
+            return { order, orderEvent }
+        })
+
+        res.status(200).json({
+            success: true,
+            message: `Status Changed successfully to ${status}`,
+            data: result
+        })
+
+
+    } catch (error) {
+        throw new NotFoundException(ErrorMessage.ORDER_NOT_FOUND, ErrorCode.ORDER_NOT_FOUND);
+    }
+}
+
+
+export const listUserOrders = async (req: Request, res: Response, next: NextFunction) => {
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+
+    if (page <= 0 || limit <= 0) {
+        throw new BadRequestException(
+            "Page and Limit should be positive number",
+            ErrorCode.VALIDATION_ERROR
+        )
+    }
+
+    let whereClause = {};
+    const userId = Number(req.params.userId);
+    if (!userId) {
+        throw new BadRequestException(
+            "User Id is required",
+            ErrorCode.VALIDATION_ERROR
+        )
+    }
+    if (userId) {
+        whereClause = {
+            userId
+        }
+    };
+    const status = req.query.status;
+    if (status) {
+        whereClause = {
+            ...whereClause,
+            status
+        }
+    };
+
+
+    const orders = await prismaClient.order.findMany({
+        where: whereClause,
+        skip: (page - 1) * limit,
+        take: limit,
+        include: {
+            OrderProducts: true,
+            OrderEvents: true
+        }
+    });
+
+    res.status(200).json({
+        success: true,
+        message: "Order fetched successfully",
+        data: {
+            total: orders.length,
+            page,
+            limit,
+            orders,
+        },
+    })
+}
 

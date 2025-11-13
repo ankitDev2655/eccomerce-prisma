@@ -1,7 +1,7 @@
 import { PrismaClient } from "../generated/prisma";
 
 export const prismaClient = new PrismaClient({
-  log: ["query", "info", "warn", "error"]
+  log: [ "info", "warn", "error"]
 })
 .$extends({
   result:{

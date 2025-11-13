@@ -12,10 +12,14 @@ productRouter.route('/')
 productRouter.route('/list')
     .get([authMiddleware.isAuthenticated], errorHandler(productControllers.listProducts));
 
+// /search?q="ABC"
+productRouter.route("/search").get([authMiddleware.isAuthenticated], errorHandler(productControllers.searchProducts))
+
 productRouter.route('/:id')
     .get([authMiddleware.isAuthenticated], errorHandler(productControllers.getProductById))
     .put([authMiddleware.isAuthenticated, authMiddleware.isAdmin], errorHandler(productControllers.updateProductById))
     .delete([authMiddleware.isAuthenticated, authMiddleware.isAdmin], errorHandler(productControllers.deleteProductById));
+
 
 
 export default productRouter;
