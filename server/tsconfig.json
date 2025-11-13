@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* === File Layout === */
     "rootDir": "./src",          // Root folder of source TypeScript files
-    "outDir": "./dist",          // Output folder for compiled JavaScript files
+    "outDir": "./build",          // Output folder for compiled JavaScript files
 
     /* === Module & Target === */
     "module": "CommonJS",        // Node.js module system (works without loader)
